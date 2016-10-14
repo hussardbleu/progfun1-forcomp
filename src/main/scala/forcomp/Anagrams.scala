@@ -88,14 +88,7 @@ object Anagrams {
       tailCombination <- combinations(tail)
     } yield (if (num == 0) Nil else List((head._1, num))) ::: tailCombination).toList
   }
-//  if (number.isEmpty) Set(Nil)
-//  else {
-//    for {
-//      split <- 1 to number.length
-//      word <- wordsForNum(number take split)
-//      rest <- encode(number drop split)
-//    } yield word :: rest
-//  }.toSet
+
 
   /** Subtracts occurrence list `y` from occurrence list `x`.
    *
@@ -107,7 +100,13 @@ object Anagrams {
    *  Note: the resulting value is an occurrence - meaning it is sorted
    *  and has no zero-entries.
    */
-  def subtract(x: Occurrences, y: Occurrences): Occurrences = ???
+  def subtract(x: Occurrences, y: Occurrences): Occurrences = (y.toMap foldLeft x.toMap)(subFreq).toList sortWith(_._1 < _._1)
+
+  def subFreq(occMap: Map[Char, Int], occ: (Char, Int)): Map[Char, Int] = {
+    val (letter, freq) = occ
+    if (occMap(letter)== freq) occMap -(letter) else occMap.updated(letter,occMap(letter)-freq)
+  }
+
 
   /** Returns a list of all anagram sentences of the given sentence.
    *
