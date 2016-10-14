@@ -104,7 +104,7 @@ object Anagrams {
 
   def subFreq(occMap: Map[Char, Int], occ: (Char, Int)): Map[Char, Int] = {
     val (letter, freq) = occ
-    if (occMap(letter)== freq) occMap -(letter) else occMap.updated(letter,occMap(letter)-freq)
+    if (occMap(letter)== freq) occMap - letter else occMap.updated(letter,occMap(letter)-freq)
   }
 
 
